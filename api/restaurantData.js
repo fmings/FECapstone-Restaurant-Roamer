@@ -22,6 +22,25 @@ const getRestaurants = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+// API/PROMIST TO GET RESTAURANTS ON A USER'S LIST
+const getUserRestaurants = () => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/restaurants.json?orderBy="userList"&equalTo=true`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 // API/PROMISE TO CREATE A NEW RESTAURANT
 const createRestaurant = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/restaurants.json`, {
@@ -82,4 +101,5 @@ export {
   getSingleRestaurant,
   deleteSingleRestaurant,
   updateRestaurant,
+  getUserRestaurants,
 };
