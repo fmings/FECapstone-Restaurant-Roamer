@@ -40,9 +40,11 @@ export default function RestaurantCard({ restaurantObj }) {
               {restaurantObj.cuisineId === cuisine.firebaseKey ? cuisine.type : ''}
             </Card.Text>
           ))}
+          <Button><img src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></Button>
           <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
             <Button><img src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></Button>
           </Link>
+          <Button><img src="https://img.icons8.com/?size=100&id=99933&format=png&color=000000" alt="delete icon" width="20" /></Button>
         </Card.Body>
       </Card>
     </>
