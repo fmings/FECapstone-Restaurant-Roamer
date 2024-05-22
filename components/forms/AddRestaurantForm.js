@@ -126,6 +126,20 @@ export default function AddRestaurantForm({ restaurantObj }) {
             }
             </Form.Select>
           </FloatingLabel>
+          <Form.Check
+            className="text-black mb-3"
+            type="switch"
+            id="tried"
+            name="tried"
+            label="Tried?"
+            checked={formInput.tried}
+            onChange={(e) => {
+              setFormInput((prevState) => ({
+                ...prevState,
+                tried: e.target.checked,
+              }));
+            }}
+          />
         </>
         <Button variant="dark" type="submit">{restaurantObj.firebaseKey ? 'Update' : 'Create'} Restaurant</Button>
       </Form>
