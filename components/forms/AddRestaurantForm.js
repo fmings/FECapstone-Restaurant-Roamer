@@ -27,7 +27,11 @@ export default function AddRestaurantForm({ restaurantObj }) {
   useEffect(() => {
     getCuisines().then(setCuisines);
     getNeighborhoods().then(setNeighborhoods);
-  }, []);
+
+    if (restaurantObj.firebaseKey) {
+      setFormInput(restaurantObj);
+    }
+  }, [restaurantObj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

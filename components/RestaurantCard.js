@@ -1,7 +1,8 @@
 // import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
+import Link from 'next/link';
 import getNeighborhoods from '../api/neighborhoodData';
 import getCuisines from '../api/cuisineData';
 // import { getRestaurants } from '../api/restaurantData';
@@ -39,6 +40,9 @@ export default function RestaurantCard({ restaurantObj }) {
               {restaurantObj.cuisineId === cuisine.firebaseKey ? cuisine.type : ''}
             </Card.Text>
           ))}
+          <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
+            <Button><img src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></Button>
+          </Link>
         </Card.Body>
       </Card>
     </>
