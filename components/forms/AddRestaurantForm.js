@@ -40,13 +40,13 @@ export default function AddRestaurantForm({ restaurantObj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (restaurantObj.firebaseKey) {
-      updateRestaurant(formInput).then(() => router.push('/myRestaurants'));
+      updateRestaurant(formInput).then(() => router.push('/restaurant/myRestaurants'));
     } else {
       const payload = { ...formInput, createdBy: user.uid };
       createRestaurant(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateRestaurant(patchPayload).then(() => {
-          router.push('myRestaurants');
+          router.push('/restaurant/myRestaurants');
         });
       });
     }
@@ -127,7 +127,7 @@ export default function AddRestaurantForm({ restaurantObj }) {
             </Form.Select>
           </FloatingLabel>
         </>
-        <Button variant="dark" type="submit">{restaurantObj.firebaseKey ? 'Update' : 'Create'} Member</Button>
+        <Button variant="dark" type="submit">{restaurantObj.firebaseKey ? 'Update' : 'Create'} Restaurant</Button>
       </Form>
     </div>
   );
