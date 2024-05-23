@@ -5,9 +5,10 @@ import { Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
 import getNeighborhoods from '../api/neighborhoodData';
 import getCuisines from '../api/cuisineData';
+import { updateRestaurant } from '../api/restaurantData';
 // import { getRestaurants } from '../api/restaurantData';
 
-export default function RestaurantCard({ restaurantObj }) {
+export default function RestaurantCard({ restaurantObj, onUpdate }) {
   const [neighborhoods, setNeighborhoods] = useState([]);
   const [cuisines, setCuisines] = useState([]);
 
@@ -15,6 +16,14 @@ export default function RestaurantCard({ restaurantObj }) {
     getNeighborhoods().then(setNeighborhoods);
     getCuisines().then(setCuisines);
   }, []);
+
+  const toggleToUserList = () => {
+    if (!restaurantObj.userList) {
+      updateRestaurant({ ...restaurantObj, userList: true }).then(() => onUpdate());
+    } else {
+      updateRestaurant({ ...restaurantObj, userList: false }).then(() => onUpdate());
+    }
+  };
 
   return (
     <>
@@ -40,7 +49,8 @@ export default function RestaurantCard({ restaurantObj }) {
               {restaurantObj.cuisineId === cuisine.firebaseKey ? cuisine.type : ''}
             </Card.Text>
           ))}
-          <Button><img src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></Button>
+          {!restaurantObj.userList
+            ? <Button onClick={toggleToUserList}><img src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></Button> : <Button onClick={toggleToUserList}><img src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></Button> }
           <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
             <Button><img src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></Button>
           </Link>
@@ -62,4 +72,5 @@ RestaurantCard.propTypes = {
     cuisineId: PropTypes.string,
     tried: PropTypes.string,
   }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
