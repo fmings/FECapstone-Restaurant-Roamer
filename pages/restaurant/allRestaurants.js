@@ -20,7 +20,7 @@ export default function AllRestaurants() {
       </h1>
       <div className="d-flex flex-wrap">
         {restaurants.map((restaurant) => (
-          <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} />))}
+          <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={getAllRestaurants} />))}
       </div>
     </div>
   );
