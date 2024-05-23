@@ -5,7 +5,7 @@ import { Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
 import getNeighborhoods from '../api/neighborhoodData';
 import getCuisines from '../api/cuisineData';
-import { updateRestaurant } from '../api/restaurantData';
+import { deleteSingleRestaurant, updateRestaurant } from '../api/restaurantData';
 // import { getRestaurants } from '../api/restaurantData';
 
 export default function RestaurantCard({ restaurantObj, onUpdate }) {
@@ -22,6 +22,12 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
       updateRestaurant({ ...restaurantObj, userList: true }).then(() => onUpdate());
     } else {
       updateRestaurant({ ...restaurantObj, userList: false }).then(() => onUpdate());
+    }
+  };
+
+  const deleteRestaurant = () => {
+    if (window.confirm(`Are you sure you want to permanently delete ${restaurantObj.name} from the database?`)) {
+      deleteSingleRestaurant(restaurantObj.firebaseKey).then(() => onUpdate());
     }
   };
 
@@ -54,7 +60,7 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
           <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
             <Button><img src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></Button>
           </Link>
-          <Button><img src="https://img.icons8.com/?size=100&id=99933&format=png&color=000000" alt="delete icon" width="20" /></Button>
+          <Button onClick={deleteRestaurant}><img src="https://img.icons8.com/?size=100&id=99933&format=png&color=000000" alt="delete icon" width="20" /></Button>
         </Card.Body>
       </Card>
     </>
