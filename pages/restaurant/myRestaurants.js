@@ -30,7 +30,6 @@ export default function MyRestaurants() {
 
     setFilteredRestaurants(updatedUserList);
   };
-  console.warn(filterMyList);
 
   return (
     <div>
