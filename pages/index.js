@@ -1,26 +1,42 @@
-import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
-import { signOut } from '../utils/auth'; // TODO: COMMENT IN FOR AUTH
-import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
+// import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
+import { useEffect, useState } from 'react';
+// import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
+import { getRestaurants, getUserRestaurants } from '../api/restaurantData';
+import RestaurantCard from '../components/RestaurantCard';
 
 function Home() {
-  const { user } = useAuth(); // TODO: COMMENT IN FOR AUTH
+  // const { user } = useAuth(); // TODO: COMMENT IN FOR AUTH
+  const [userRestaurants, setUserRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
 
-  // const user = { displayName: 'Dr. T' }; // TODO: COMMENT OUT FOR AUTH
+  const getAllUserRestaurants = () => {
+    getUserRestaurants().then(setUserRestaurants);
+  };
+
+  const getAllRestaurants = () => {
+    getRestaurants().then(setRestaurants);
+  };
+
+  useEffect(() => {
+    getAllUserRestaurants();
+    getAllRestaurants();
+  }, []);
+
   return (
-    <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>Hello {user.displayName}!</h1>
-      <p>Click the button below to logout!</p>
-      <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-        Sign Out
-      </Button>
+    <div>
+      {userRestaurants.length > 0
+        ? (<p>Where should you eat tonight?</p>
+        ) : (
+          <div>
+            <p>Uh-Oh! It does not look like you have any restaurants saved to your list yet - click below to start adding the restaurants you want to try!</p>
+            <div>
+              <div className="d-flex flex-wrap">
+                {restaurants.map((restaurant) => (
+                  <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={getAllRestaurants} />))}
+              </div>
+            </div>
+          </div>
+        ) }
     </div>
   );
 }
