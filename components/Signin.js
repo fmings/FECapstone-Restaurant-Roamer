@@ -9,13 +9,13 @@ function Signin() {
       style={{
         height: '90vh',
         padding: '30px',
-        maxWidth: '400px',
+        maxWidth: '900px',
         margin: '0 auto',
       }}
     >
-      <h1>Hi there!</h1>
-      <p>Click the button below to login!</p>
-      <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
+      <img src="https://i.imgur.com/3iZ3W0T.png" alt="Restaurant Roamer Logo" width="900" />
+      <h1>Are You Hungry?</h1>
+      <Button type="button" className="copy-btn" onClick={signIn}>
         Sign In
       </Button>
     </div>
