@@ -22,4 +22,75 @@ a {
 
 body {
   background-color: #C82525;
+  min-height: 100%;
+}
+
+.signin-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-img{
+  justify-content: center;
+}
+
+.btn-accent{
+  background-color: #F4C4C4;
+  border: #F4C4C4;
+  width: 100px;
+}
+
+.btn-accent:hover{
+  background-color: #eb9494;
+  border: #eb9494;
+  width: 100px;
+}
+
+.btn-accent:focus{
+  background-color: #F4C4C4;
+  border: #F4C4C4;
+  width: 100px;
+}
+
+.btn-accent:active{
+  background-color: #F4C4C4;
+  border: #F4C4C4;
+  width: 100px;
+}
+
+.btn-neutral:hover{
+  background-color: #000000;
+  border: #000000;
+  color: white;
+}
+
+.navbarSecondary{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.btn{
+  margin-left: 20px;
+}
+
+.navButton{
+  width: 200px;
+  margin-top: 20px;
+}
+
+.navButton:hover{
+  width: 200px;
+  margin-top: 20px;
+}
+
+.navButton:active{
+  width: 200px;
+  margin-top: 20px;
+}
+
+.navButton:focus{
+  width: 200px;
+  margin-top: 20px;
 }
