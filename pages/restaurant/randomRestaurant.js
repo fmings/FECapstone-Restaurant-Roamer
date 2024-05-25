@@ -29,7 +29,7 @@ export default function RandomRestaurant() {
   }, [getRandomRestaurant]);
 
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="d-flex flex-wrap">
         <RestaurantCard restaurantObj={randomRestaurant} key={randomRestaurant.firebaseKey} />
       </div>

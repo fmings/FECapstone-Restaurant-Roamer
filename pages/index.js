@@ -30,7 +30,7 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen">
       {userRestaurants.length > 0
         ? (
           <div><p>Where should you eat tonight?</p>

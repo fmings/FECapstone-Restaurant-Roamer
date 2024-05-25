@@ -32,7 +32,7 @@ export default function MyRestaurants() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <h1>My Restaurants</h1>
       <Button id="want-to-visit" onClick={filterMyList}>Want to Visit</Button>
       <Button id="visited" onClick={filterMyList}>Visited</Button>

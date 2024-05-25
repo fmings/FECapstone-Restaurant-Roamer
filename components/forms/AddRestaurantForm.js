@@ -57,7 +57,7 @@ export default function AddRestaurantForm({ restaurantObj }) {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <Form onSubmit={handleSubmit}>
         <>
           <FloatingLabel

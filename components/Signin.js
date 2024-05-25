@@ -1,23 +1,14 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import { signIn } from '../utils/auth';
 
 function Signin() {
   return (
-    <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>Hi there!</h1>
-      <p>Click the button below to login!</p>
-      <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
+    <div className="signin-page min-h-screen">
+      <img className="logo-img" src="https://i.imgur.com/4dd7irv.png" alt="Restaurant Roamer Logo" width="500" />
+      <h1 className="prose prose-2xl font-bold text-white">Are You Hungry?</h1>
+      <button className="btn btn-accent" type="button" onClick={signIn}>
         Sign In
-      </Button>
+      </button>
     </div>
   );
 }

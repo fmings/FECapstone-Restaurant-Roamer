@@ -1,41 +1,34 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Link from 'next/link';
-import {
-  Navbar, Container, Nav, Button,
-} from 'react-bootstrap';
 import { signOut } from '../utils/auth';
 
 export default function NavBarAuth() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Container>
-        <Link passHref href="/">
-          <Navbar.Brand>CHANGE ME</Navbar.Brand>
+    <>
+      <div className="navbar">
+        <Link passHref href="/restaurant/newRestaurant">
+          <button className="btn btn-neutral" type="button">Add a Restaurant</button>
         </Link>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-            <Link passHref href="/">
-              <Nav.Link>Home</Nav.Link>
-            </Link>
-            <Link passHref href="/restaurant/newRestaurant">
-              <Nav.Link>Add Restaurant</Nav.Link>
-            </Link>
-            <Link passHref href="/">
-              <Nav.Link>Restaurant Picker</Nav.Link>
-            </Link>
-            <Link passHref href="/restaurant/myRestaurants">
-              <Nav.Link>My List</Nav.Link>
-            </Link>
-            <Link passHref href="/restaurant/allRestaurants">
-              <Nav.Link>All Restaurants</Nav.Link>
-            </Link>
-            <Button variant="danger" onClick={signOut}>Sign Out</Button>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        <div className="navbar-center">
+          <Link passHref href="/">
+            <img className="logo-img" src="https://i.imgur.com/4dd7irv.png" alt="Restaurant Roamer Logo" width="200" />
+          </Link>
+        </div>
+        <button className="btn btn-accent" type="button" onClick={signOut}>Sign Out</button>
+      </div>
+      <div className="navbarSecondary">
+        <Link passHref href="/">
+          <button className="btn btn-accent navButton" type="button">Restaurant Suggestor</button>
+        </Link>
+        <Link passHref href="/restaurant/myRestaurants">
+          <button className="btn btn-accent navButton" type="button">My List</button>
+        </Link>
+        <Link passHref href="/restaurant/allRestaurants">
+          <button className="btn btn-accent navButton" type="button">All Restaurants</button>
+        </Link>
+      </div>
+
+    </>
   );
 }
