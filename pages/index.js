@@ -37,10 +37,11 @@ function Home() {
             <Button onClick={generateRandomRestaurant}>Generate a Restaurant Suggestion</Button>
           </div>
         ) : (
-          <div>
-            <p>Uh-Oh! It does not look like you have any restaurants saved to your list yet - click below to start adding the restaurants you want to try!</p>
-            <div>
-              <div className="d-flex flex-wrap">
+          <div className="restSuggestor">
+            <h1 className="prose prose-xl text-white text-center">Uh-Oh! It does not look like you have any restaurants saved to your list yet - click below to start adding the restaurants you want to try!</h1>
+            <div className="restSuggestor">
+              <h1 className="prose prose-lg" id="all-restaurants">All Restaurants</h1>
+              <div className="restCards">
                 {restaurants.map((restaurant) => (
                   <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={getAllRestaurants} />))}
               </div>
