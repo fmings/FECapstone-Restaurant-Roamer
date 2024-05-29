@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { getUserRestaurants } from '../../api/restaurantData';
 import RestaurantCard from '../../components/RestaurantCard';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function MyRestaurants() {
   const [userRestaurants, setUserRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState(userRestaurants);
+  const { user } = useAuth();
 
   const getAllUserRestaurants = () => {
-    getUserRestaurants().then((restaurants) => {
+    getUserRestaurants(user.uid).then((restaurants) => {
       setUserRestaurants(restaurants);
       setFilteredRestaurants(restaurants);
     });
