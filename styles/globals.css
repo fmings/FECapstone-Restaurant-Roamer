@@ -151,3 +151,89 @@ body {
   height: 200px;
   width: 300px;
 }
+
+.btn-nobkgrd{
+  background-color: none;
+  padding-bottom: 10px;
+  padding-right: 15px;
+}
+
+.btn-image{
+  width: 25px;
+}
+
+.restSuggestBtn{
+  width: 300px;
+}
+
+.restSuggestBtn:hover{
+  width: 300px;
+}
+
+.restSuggestBtn:focus{
+  width: 300px;
+}
+
+.restSuggestBtn:active{
+  width: 300px;
+}
+
+.filterButtons{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#want-to-visit, #visited, #all{
+  background-color: black;
+  color: #C82525;
+  width: 150px;
+  opacity: 70%;
+}
+
+.input{
+  margin: 10px;
+}
+
+.selectFields{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  min-width: 200px;
+}
+
+select{
+  min-width:400px;
+  margin-bottom: 10px;
+}
+
+.submit-btn{
+  width: 200px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-btn:hover{
+  width: 200px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-btn:focus{
+  width: 200px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-btn:active{
+  width: 200px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}

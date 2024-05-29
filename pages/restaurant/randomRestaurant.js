@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import { getUserRestaurants } from '../../api/restaurantData';
 import RestaurantCard from '../../components/RestaurantCard';
 
 export default function RandomRestaurant() {
   const [restaurantArray, setRestaurantArray] = useState([]);
-  const [randomRestaurant, setRandomRestaurant] = useState([]);
+  const [randomRestaurant, setRandomRestaurant] = useState({});
 
   const getAllUserRestaurants = () => {
     getUserRestaurants().then(setRestaurantArray);
@@ -28,12 +27,14 @@ export default function RandomRestaurant() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getRandomRestaurant]);
 
+  const noop = () => {};
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen restSuggestor">
       <div className="d-flex flex-wrap">
-        <RestaurantCard restaurantObj={randomRestaurant} key={randomRestaurant.firebaseKey} />
+        <RestaurantCard restaurantObj={randomRestaurant} key={randomRestaurant.firebaseKey} onUpdate={noop} />
       </div>
-      <div><Button onClick={getRandomRestaurant}>Generate Another Suggestion</Button></div>
+      <div><button type="button" className="btn btn-accent restSuggestBtn" onClick={getRandomRestaurant}>Generate Another Suggestion</button></div>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import getCuisines from '../../api/cuisineData';
@@ -58,45 +57,41 @@ export default function AddRestaurantForm({ restaurantObj }) {
 
   return (
     <div className="min-h-screen">
-      <Form onSubmit={handleSubmit}>
-        <>
-          <FloatingLabel
-            controlId="floatingInput1"
-            label="Restaurant Name"
-            className="mb-3"
-          >
-            <Form.Control
-              type="text"
-              placeholder="Restaurant Name"
-              name="name"
-              value={formInput.name}
-              onChange={handleChange}
-              required
-            />
-          </FloatingLabel>
-          <FloatingLabel
-            controlId="floatingInput2"
-            label="Logo Image"
-            className="mb-3"
-          >
-            <Form.Control
-              type="text"
-              placeholder="logo or image url"
-              name="logo"
-              value={formInput.logo}
-              onChange={handleChange}
-              required
-            />
-          </FloatingLabel>
-          <FloatingLabel className="form-field" controlId="floatingSelect" label="Cuisine Type">
-            <Form.Select
-              aria-label="Cuisine Type"
+      <form onSubmit={handleSubmit}>
+        <label className="input input-bordered flex items-center gap-2">
+          Restaurant Name
+          <input
+            type="text"
+            className="grow"
+            placeholder="Enter Restaurant Name"
+            name="name"
+            value={formInput.name}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label className="input input-bordered flex items-center gap-2">
+          Logo/Image
+          <input
+            type="text"
+            className="grow"
+            placeholder="Add URL for Restaurant Logo"
+            name="logo"
+            value={formInput.logo}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <div className="selectFields">
+          <div>
+            <select
+              className="select select-bordered w-full max-w-xs"
               name="cuisineId"
               onChange={handleChange}
               value={formInput.cuisineId}
               required
             >
-              <option value="">Select Cuisine</option>
+              <option value="">Select Cuisine?</option>
               {
                 cuisines.map((cuisine) => (
                   <option
@@ -107,17 +102,16 @@ export default function AddRestaurantForm({ restaurantObj }) {
                   </option>
                 ))
               }
-            </Form.Select>
-          </FloatingLabel>
-          <FloatingLabel className="form-field" controlId="floatingSelect2" label="Neighborhood">
-            <Form.Select
-              aria-label="Neighborhood"
+            </select>
+          </div>
+          <div>
+            <select
+              className="select select-bordered w-full max-w-xs"
               name="neighborhoodId"
               onChange={handleChange}
               value={formInput.neighborhoodId}
               required
-            >
-              <option value="">Select Neighborhood</option>
+            >          <option value="">Select Neighborhood?</option>
               {
               neighborhoods.map((neighborhood) => (
                 <option
@@ -128,25 +122,29 @@ export default function AddRestaurantForm({ restaurantObj }) {
                 </option>
               ))
             }
-            </Form.Select>
-          </FloatingLabel>
-          <Form.Check
-            className="text-black mb-3"
-            type="switch"
-            id="tried"
-            name="tried"
-            label="Tried?"
-            checked={formInput.tried}
-            onChange={(e) => {
-              setFormInput((prevState) => ({
-                ...prevState,
-                tried: e.target.checked,
-              }));
-            }}
-          />
-        </>
-        <Button variant="dark" type="submit">{restaurantObj.firebaseKey ? 'Update' : 'Create'} Restaurant</Button>
-      </Form>
+            </select>
+          </div>
+        </div>
+        <div className="form-control tried">
+          <label className="label cursor-pointer tried">
+            <span className="label-text">Tried?</span>
+            <input
+              type="checkbox"
+              className="toggle"
+              id="tried"
+              name="tried"
+              checked={formInput.tried}
+              onChange={(e) => {
+                setFormInput((prevState) => ({
+                  ...prevState,
+                  tried: e.target.checked,
+                }));
+              }}
+            />
+          </label>
+        </div>
+        <button type="submit" className="submit-btn btn btn-accent">{restaurantObj.firebaseKey ? 'Update' : 'Add'} Restaurant</button>
+      </form>
     </div>
   );
 }

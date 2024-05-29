@@ -1,11 +1,9 @@
-// import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import getNeighborhoods from '../api/neighborhoodData';
 import getCuisines from '../api/cuisineData';
 import { deleteSingleRestaurant, updateRestaurant } from '../api/restaurantData';
-// import { getRestaurants } from '../api/restaurantData';
 
 export default function RestaurantCard({ restaurantObj, onUpdate }) {
   const [neighborhoods, setNeighborhoods] = useState([]);
@@ -14,6 +12,10 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
   useEffect(() => {
     getNeighborhoods().then(setNeighborhoods);
     getCuisines().then(setCuisines);
+    return () => {
+      setNeighborhoods([]);
+      setCuisines([]);
+    };
   }, []);
 
   const toggleToUserList = () => {
@@ -38,21 +40,21 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
           <h2 className="card-title">{restaurantObj.name}</h2>
           {neighborhoods.map((neighborhood) => (
             restaurantObj.neighborhoodId === neighborhood.firebaseKey ? (
-              <p className="neighborhood">{neighborhood.name}</p>
+              <p className="neighborhood" key={neighborhood.firebaseKey}>{neighborhood.name}</p>
             ) : null
           ))}
           {cuisines.map((cuisine) => (
-            restaurantObj.cuisineId === cuisine.firebaseKey ? (<p className="cuisine">{cuisine.type} Cuisine</p>) : null
+            restaurantObj.cuisineId === cuisine.firebaseKey ? (<p className="cuisine" key={cuisine.firebaseKey}>{cuisine.type} Cuisine</p>) : null
           ))}
-          <div className="card-actions justify-end">
-            {!restaurantObj.userList
-              ? <button type="button" className="btn btn-primary" onClick={toggleToUserList}><img src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn btn-primary" onClick={toggleToUserList}><img src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> }
-            <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
-              <button type="button" className="btn btn-primary"><img src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></button>
-            </Link>
-            <button type="button" className="btn btn-primary" onClick={deleteRestaurant}><img src="https://img.icons8.com/?size=100&id=99933&format=png&color=000000" alt="delete icon" width="20" /></button>
+        </div>
+        <div className="card-actions justify-end">
+          {!restaurantObj.userList
+            ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> }
+          <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
+            <button type="button" className="btn-nobkgrd"><img className="btn-image" src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></button>
+          </Link>
+          <button type="button" className="btn-nobkgrd" onClick={deleteRestaurant}><img className="btn-image" src="https://img.icons8.com/?size=100&id=99933&format=png&color=000000" alt="delete icon" width="20" /></button>
 
-          </div>
         </div>
       </div>
     </>
@@ -68,7 +70,7 @@ RestaurantCard.propTypes = {
     logo: PropTypes.string,
     neighborhoodId: PropTypes.string,
     cuisineId: PropTypes.string,
-    tried: PropTypes.string,
+    tried: PropTypes.bool,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
