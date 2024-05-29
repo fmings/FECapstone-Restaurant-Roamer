@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { getUserRestaurants } from '../../api/restaurantData';
 import RestaurantCard from '../../components/RestaurantCard';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function RandomRestaurant() {
   const [restaurantArray, setRestaurantArray] = useState([]);
   const [randomRestaurant, setRandomRestaurant] = useState({});
+  const { user } = useAuth();
 
   const getAllUserRestaurants = () => {
-    getUserRestaurants().then(setRestaurantArray);
+    getUserRestaurants(user.uid).then(setRestaurantArray);
   };
 
   const getRandomRestaurant = () => {
