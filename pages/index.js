@@ -1,7 +1,6 @@
 // import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
 import { useEffect, useState } from 'react';
 // import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
-import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { getRestaurants, getUserRestaurants } from '../api/restaurantData';
 import RestaurantCard from '../components/RestaurantCard';
@@ -33,14 +32,16 @@ function Home() {
     <div className="min-h-screen">
       {userRestaurants.length > 0
         ? (
-          <div><p>Where should you eat tonight?</p>
-            <Button onClick={generateRandomRestaurant}>Generate a Restaurant Suggestion</Button>
+          <div className="restSuggestor">
+            <h1 className="prose prose-xl text-white text-center">Where should you eat tonight?</h1>
+            <button type="button" className="btn btn-accent restSuggestBtn" onClick={generateRandomRestaurant}>Generate a Restaurant Suggestion</button>
           </div>
         ) : (
-          <div>
-            <p>Uh-Oh! It does not look like you have any restaurants saved to your list yet - click below to start adding the restaurants you want to try!</p>
-            <div>
-              <div className="d-flex flex-wrap">
+          <div className="restSuggestor">
+            <h1 className="prose prose-xl text-white text-center">Uh-Oh! It does not look like you have any restaurants saved to your list yet - click below to start adding the restaurants you want to try!</h1>
+            <div className="restSuggestor">
+              <h1 className="prose prose-lg" id="all-restaurants">All Restaurants</h1>
+              <div className="restCards">
                 {restaurants.map((restaurant) => (
                   <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={getAllRestaurants} />))}
               </div>

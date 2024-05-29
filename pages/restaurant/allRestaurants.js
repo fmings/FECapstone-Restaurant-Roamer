@@ -14,8 +14,8 @@ export default function AllRestaurants() {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <h1 className="text-3xl font-bold underline">
+    <div className="min-h-screen restSuggestor">
+      <h1 className="text-3xl text-white font-bold underline">
         All Restaurants
       </h1>
       <div className="d-flex flex-wrap">

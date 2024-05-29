@@ -13,7 +13,7 @@ export default function EditRestaurant() {
   }, [firebaseKey]);
   return (
     <div>
-      <h1>Edit Restaurant</h1>
+      <h1 className="text-3xl text-white font-bold underline restSuggestor">Edit Restaurant</h1>
       <AddRestaurantForm restaurantObj={editRestaurant} />
     </div>
   );
