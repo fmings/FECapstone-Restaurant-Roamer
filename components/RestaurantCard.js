@@ -67,7 +67,7 @@ RestaurantCard.propTypes = {
   restaurantObj: PropTypes.shape({
     firebaseKey: PropTypes.string,
     createdBy: PropTypes.string,
-    userList: PropTypes.bool,
+    userList: PropTypes.string,
     name: PropTypes.string,
     logo: PropTypes.string,
     neighborhoodId: PropTypes.string,
