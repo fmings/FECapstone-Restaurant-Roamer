@@ -24,7 +24,7 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
     if (!restaurantObj.userList) {
       updateRestaurant({ ...restaurantObj, userList: user.uid }).then(() => onUpdate());
     } else {
-      updateRestaurant({ ...restaurantObj, userList: false }).then(() => onUpdate());
+      updateRestaurant({ ...restaurantObj, userList: null }).then(() => onUpdate());
     }
   };
 

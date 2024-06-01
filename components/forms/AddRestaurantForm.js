@@ -14,7 +14,7 @@ const initialState = {
   logo: '',
   neighborhoodId: '',
   cuisineId: '',
-  tried: '',
+  tried: false,
 };
 export default function AddRestaurantForm({ restaurantObj }) {
   const [formInput, setFormInput] = useState(initialState);
