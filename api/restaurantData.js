@@ -22,9 +22,9 @@ const getRestaurants = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// API/PROMIST TO GET RESTAURANTS ON A USER'S LIST
-const getUserRestaurants = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/restaurants.json?orderBy="userList"&equalTo=true`, {
+// API/PROMISE TO GET RESTAURANTS ON A USER'S LIST
+const getUserRestaurants = (uid) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/restaurants.json?orderBy="userList"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

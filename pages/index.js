@@ -4,15 +4,17 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getRestaurants, getUserRestaurants } from '../api/restaurantData';
 import RestaurantCard from '../components/RestaurantCard';
+import { useAuth } from '../utils/context/authContext';
 
 function Home() {
   // const { user } = useAuth(); // TODO: COMMENT IN FOR AUTH
   const [userRestaurants, setUserRestaurants] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const router = useRouter();
+  const { user } = useAuth();
 
   const getAllUserRestaurants = () => {
-    getUserRestaurants().then(setUserRestaurants);
+    getUserRestaurants(user.uid).then(setUserRestaurants);
   };
 
   const getAllRestaurants = () => {

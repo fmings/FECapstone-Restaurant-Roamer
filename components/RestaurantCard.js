@@ -4,10 +4,12 @@ import Link from 'next/link';
 import getNeighborhoods from '../api/neighborhoodData';
 import getCuisines from '../api/cuisineData';
 import { deleteSingleRestaurant, updateRestaurant } from '../api/restaurantData';
+import { useAuth } from '../utils/context/authContext';
 
 export default function RestaurantCard({ restaurantObj, onUpdate }) {
   const [neighborhoods, setNeighborhoods] = useState([]);
   const [cuisines, setCuisines] = useState([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     getNeighborhoods().then(setNeighborhoods);
@@ -20,9 +22,9 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
 
   const toggleToUserList = () => {
     if (!restaurantObj.userList) {
-      updateRestaurant({ ...restaurantObj, userList: true }).then(() => onUpdate());
+      updateRestaurant({ ...restaurantObj, userList: user.uid }).then(() => onUpdate());
     } else {
-      updateRestaurant({ ...restaurantObj, userList: false }).then(() => onUpdate());
+      updateRestaurant({ ...restaurantObj, userList: null }).then(() => onUpdate());
     }
   };
 
@@ -48,7 +50,7 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
           ))}
         </div>
         <div className="card-actions justify-end">
-          {!restaurantObj.userList
+          {restaurantObj.userList !== user.uid
             ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> }
           <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
             <button type="button" className="btn-nobkgrd"><img className="btn-image" src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></button>
@@ -65,7 +67,7 @@ RestaurantCard.propTypes = {
   restaurantObj: PropTypes.shape({
     firebaseKey: PropTypes.string,
     createdBy: PropTypes.string,
-    userList: PropTypes.bool,
+    userList: PropTypes.string,
     name: PropTypes.string,
     logo: PropTypes.string,
     neighborhoodId: PropTypes.string,

@@ -9,12 +9,12 @@ import { useAuth } from '../../utils/context/authContext';
 const initialState = {
   firebaseKey: '',
   createdBy: '',
-  userList: true,
+  userList: '',
   name: '',
   logo: '',
   neighborhoodId: '',
   cuisineId: '',
-  tried: '',
+  tried: false,
 };
 export default function AddRestaurantForm({ restaurantObj }) {
   const [formInput, setFormInput] = useState(initialState);
@@ -45,7 +45,7 @@ export default function AddRestaurantForm({ restaurantObj }) {
     if (restaurantObj.firebaseKey) {
       updateRestaurant(formInput).then(() => router.push('/restaurant/myRestaurants'));
     } else {
-      const payload = { ...formInput, createdBy: user.uid };
+      const payload = { ...formInput, createdBy: user.uid, userList: user.uid };
       createRestaurant(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateRestaurant(patchPayload).then(() => {
@@ -153,7 +153,7 @@ AddRestaurantForm.propTypes = {
   restaurantObj: PropTypes.shape({
     firebaseKey: PropTypes.string,
     createdBy: PropTypes.string,
-    userList: PropTypes.bool,
+    userList: PropTypes.string,
     name: PropTypes.string,
     logo: PropTypes.string,
     neighborhoodId: PropTypes.string,
