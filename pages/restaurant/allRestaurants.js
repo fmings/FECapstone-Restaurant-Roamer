@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import RestaurantCard from '../../components/RestaurantCard';
-import { getRestaurants } from '../../api/restaurantData';
+import getGoogleRestaurants from '../../api/externalRestaurantAPI';
 
 export default function AllRestaurants() {
   const [restaurants, setRestaurants] = useState([]);
 
   const getAllRestaurants = () => {
-    getRestaurants().then(setRestaurants);
+    getGoogleRestaurants().then(setRestaurants);
+    console.warn(restaurants);
   };
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function AllRestaurants() {
       </h1>
       <div className="d-flex flex-wrap">
         {restaurants.map((restaurant) => (
-          <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={getAllRestaurants} />))}
+          <RestaurantCard restaurantObj={restaurant} key={restaurant.id} onUpdate={getAllRestaurants} />))}
       </div>
     </div>
   );

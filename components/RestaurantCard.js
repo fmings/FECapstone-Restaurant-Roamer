@@ -29,7 +29,7 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
   };
 
   const deleteRestaurant = () => {
-    if (window.confirm(`Are you sure you want to permanently delete ${restaurantObj.name} from the database?`)) {
+    if (window.confirm(`Are you sure you want to permanently delete ${restaurantObj.displayName.text} from the database?`)) {
       deleteSingleRestaurant(restaurantObj.firebaseKey).then(() => onUpdate());
     }
   };
@@ -37,9 +37,8 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
   return (
     <>
       <div className="card w-96 glass">
-        <figure className="rest-image"><img src={restaurantObj.logo} alt="logo" /></figure>
         <div className="card-body">
-          <h2 className="card-title">{restaurantObj.name}</h2>
+          <h2 className="card-title">{restaurantObj.displayName.text}</h2>
           {neighborhoods.map((neighborhood) => (
             restaurantObj.neighborhoodId === neighborhood.firebaseKey ? (
               <p className="neighborhood" key={neighborhood.firebaseKey}>{neighborhood.name}</p>
@@ -68,7 +67,7 @@ RestaurantCard.propTypes = {
     firebaseKey: PropTypes.string,
     createdBy: PropTypes.string,
     userList: PropTypes.string,
-    name: PropTypes.string,
+    displayName: PropTypes.string,
     logo: PropTypes.string,
     neighborhoodId: PropTypes.string,
     cuisineId: PropTypes.string,

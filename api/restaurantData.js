@@ -4,23 +4,23 @@ import { clientCredentials } from '../utils/client';
 const endpoint = clientCredentials.databaseURL;
 
 // API/PROMISE TO GET ALL RESTAURANTS
-const getRestaurants = () => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/restaurants.json`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data) {
-        resolve(Object.values(data));
-      } else {
-        resolve([]);
-      }
-    })
-    .catch(reject);
-});
+// const getRestaurants = () => new Promise((resolve, reject) => {
+//   fetch(`${endpoint}/restaurants.json`, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       if (data) {
+//         resolve(Object.values(data));
+//       } else {
+//         resolve([]);
+//       }
+//     })
+//     .catch(reject);
+// });
 
 // API/PROMISE TO GET RESTAURANTS ON A USER'S LIST
 const getUserRestaurants = (uid) => new Promise((resolve, reject) => {
@@ -96,7 +96,6 @@ const updateRestaurant = (payload) => new Promise((resolve, reject) => {
 });
 
 export {
-  getRestaurants,
   createRestaurant,
   getSingleRestaurant,
   deleteSingleRestaurant,
