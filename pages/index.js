@@ -2,9 +2,10 @@
 import { useEffect, useState } from 'react';
 // import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
 import { useRouter } from 'next/router';
-import { getRestaurants, getUserRestaurants } from '../api/restaurantData';
+import getUserRestaurants from '../api/restaurantData';
 import RestaurantCard from '../components/RestaurantCard';
 import { useAuth } from '../utils/context/authContext';
+import getRestaurants from '../api/externalRestaurantAPI';
 
 function Home() {
   // const { user } = useAuth(); // TODO: COMMENT IN FOR AUTH
