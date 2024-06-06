@@ -7,10 +7,10 @@ const getGoogleRestaurants = () => new Promise((resolve, reject) => {
     headers: {
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': 'AIzaSyD5pTxla04pAWyYrx1xWJGpUy8cmgyTwIg',
-      'X-Goog-FieldMask': 'places.displayName,places.id,places.primaryType',
+      'X-Goog-FieldMask': 'places.displayName,places.id,places.primaryType,places.address_components',
     },
     body: JSON.stringify({
-      includedTypes: ['american_restaurant', 'barbecue_restaurant', 'italian_restaurant'],
+      includedTypes: ['american_restaurant', 'barbecue_restaurant', 'chinese_restaurant', 'french_restaurant', 'greek_restaurant', 'hamburger_restaurant', 'indian_restaurant', 'italian_restaurant', 'korean_restaurant', 'mexican_restaurant', 'pizza_restaurant', 'spanish_restaurant', 'thai_restaurant'],
       locationRestriction: {
         circle: {
           center: {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getUserRestaurants } from '../../api/restaurantData';
 import RestaurantCard from '../../components/RestaurantCard';
 import { useAuth } from '../../utils/context/authContext';
+import { getUserRestaurants } from '../../api/restaurantData';
 
 export default function RandomRestaurant() {
   const [restaurantArray, setRestaurantArray] = useState([]);
