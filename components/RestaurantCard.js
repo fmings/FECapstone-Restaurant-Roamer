@@ -51,10 +51,14 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
         <div className="card-actions justify-end">
           {restaurantObj.userList !== user.uid
             ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> }
-          <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
-            <button type="button" className="btn-nobkgrd"><img className="btn-image" src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></button>
-          </Link>
-          <button type="button" className="btn-nobkgrd" onClick={deleteRestaurant}><img className="btn-image" src="https://img.icons8.com/?size=100&id=99933&format=png&color=000000" alt="delete icon" width="20" /></button>
+          {restaurantObj.userList
+            ? (
+              <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
+                <button type="button" className="btn-nobkgrd"><img className="btn-image" src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></button>
+              </Link>
+            ) : '' }
+          {!restaurantObj.id
+            ? <button type="button" className="btn-nobkgrd" onClick={deleteRestaurant}><img className="btn-image" src="https://img.icons8.com/?size=100&id=99933&format=png&color=000000" alt="delete icon" width="20" /></button> : ''}
 
         </div>
       </div>
@@ -74,6 +78,7 @@ RestaurantCard.propTypes = {
     cuisineId: PropTypes.string,
     tried: PropTypes.bool,
     primaryType: PropTypes.string,
+    id: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
