@@ -38,7 +38,7 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
     <>
       <div className="card w-96 glass">
         <div className="card-body">
-          <h2 className="card-title">{!restaurantObj.firebaseKey ? restaurantObj.displayName.text : restaurantObj.name }</h2>
+          <h2 className="card-title">{restaurantObj.firebaseKey ? restaurantObj.name : restaurantObj.displayName.text }</h2>
           {neighborhoods.map((neighborhood) => (
             restaurantObj.neighborhoodId === neighborhood.firebaseKey ? (
               <p className="neighborhood" key={neighborhood.firebaseKey}>{neighborhood.name}</p>

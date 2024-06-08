@@ -2,7 +2,6 @@
   "-NyBloXSVR6HeuKPlqoE":{
     "firebaseKey":"-NyBloXSVR6HeuKPlqoE",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":true,
     "name":"Coco's Italian Restaurant",
     "logo":"https://rlfiles1.azureedge.net/5811da22-67b2-4100-8869-b6c91b194c4a/b8766d13-1196-4823-9495-e0706075b24e/ShortTransparent.png",
     "neighborhoodId":"-NyBiZgIVaCx_qVBC6Ax",
@@ -12,7 +11,6 @@
   "-NyBloXT0VykHN6M2NBl":{
     "firebaseKey":"-NyBloXT0VykHN6M2NBl",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":false,
     "name":"Lola",
     "logo":"https://images.squarespace-cdn.com/content/v1/5fd1468dc461dc1c6e53de4d/c8de2b29-1c37-470d-b3fb-7ed1f69539ae/Script_logo+White.png?format=1500w",
     "neighborhoodId":"-NyBiZgK08C25c7xqXi2",
@@ -22,7 +20,6 @@
   "-NyBloXT0VykHN6M2NBm":{
     "firebaseKey":"-NyBloXT0VykHN6M2NBm",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":false,
     "name":"Cherries",
     "logo":"https://images.squarespace-cdn.com/content/v1/621abb5378971c5d478cbfdb/697570ef-28c6-45dc-93b6-554ab3faa32d/Screen+Shot+2022-04-11+at+10.59.35+AM.png",
     "neighborhoodId":"-NyBiZgHmWJWrezg7-La",
@@ -32,7 +29,6 @@
   "-NyBloXU6JH7L0IkVMnv":{
     "firebaseKey":"-NyBloXU6JH7L0IkVMnv",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":false,
     "name":"Benji's Bagels",
     "logo":"https://images.squarespace-cdn.com/content/v1/640b57c817a6703223f0b3c5/78d8d5fd-e404-42b4-9f81-870078b4ea7a/BBCH_bagel+blk+stars_final.png?format=1500w",
     "neighborhoodId":"-NyBiZgIVaCx_qVBC6Ax",
@@ -42,7 +38,6 @@
   "-NyBloXVatOj-TLBw_Pl":{
     "firebaseKey":"-NyBloXVatOj-TLBw_Pl",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":false,
     "name":"Chauhan",
     "logo":"https://popmenucloud.com/cdn-cgi/image/width%3D1920%2Cheight%3D1920%2Cfit%3Dscale-down%2Cformat%3Dauto%2Cquality%3D60/xzfndvpu/2900bed4-6e6e-4829-a177-7b7d1807da80.jpeg",
     "neighborhoodId":"-NyBiZgJSqT9JL3RdWf3",
@@ -52,7 +47,6 @@
   "-NyBloXVatOj-TLBw_Pm":{
     "firebaseKey":"-NyBloXVatOj-TLBw_Pm",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":true,
     "name":"Little Hats Italian Market",
     "logo":"https://images.squarespace-cdn.com/content/v1/611aaf1446b20b6b952f2f9b/6f01e3e0-6380-4ff4-b12a-80b8e52743f3/Little+Hats+Web+Graphics-11.png?format=1500w",
     "neighborhoodId":"-NyBiZgIVaCx_qVBC6B-",
@@ -62,7 +56,6 @@
   "-NyBloXWvq_61KfkfSVE":{
     "firebaseKey":"-NyBloXWvq_61KfkfSVE",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":false,
     "name":"Redheaded Stranger",
     "logo":"https://media-cdn.tripadvisor.com/media/photo-s/25/be/24/3c/caption.jpg",
     "neighborhoodId":"-NyBiZgHmWJWrezg7-La",
@@ -72,7 +65,6 @@
   "-NyBloXX1vsf66-reVmG":{
     "firebaseKey":"-NyBloXX1vsf66-reVmG",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":false,
     "name":"Two Hands",
     "logo":"https://images.getbento.com/accounts/3cca86fd1cad92b59651204131a0ae59/media/images/71949TH_Logo_Bendy_Blue.png",
     "neighborhoodId":"-NyBiZgJSqT9JL3RdWf3",
@@ -82,7 +74,6 @@
   "-NyBloXX1vsf66-reVmH":{
     "firebaseKey":"-NyBloXX1vsf66-reVmH",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":true,
     "name":"Hearts",
     "logo":"https://d2s742iet3d3t1.cloudfront.net/restaurants/restaurant-52606000000000000/restaurant_list_image_1595013293.png",
     "neighborhoodId":"-NyBiZgHmWJWrezg7-La",
@@ -92,7 +83,6 @@
   "-NyBloXYVm3Rt5FK7G1U":{
     "firebaseKey":"-NyBloXYVm3Rt5FK7G1U",
     "createdBy":"e7lhHcTQSsZnbNMt5pIIDvdjMCH2",
-    "userList":false,
     "name":"Nicoletto's Pasta Co.",
     "logo":"https://www.nicolettos.com/cdn/shop/files/RGB_Nicolettos_pasta_600x200.png?v=1637178441",
     "neighborhoodId":"-NyBiZgHmWJWrezg7-La",
