@@ -2,10 +2,11 @@
 import { useEffect, useState } from 'react';
 // import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
 import { useRouter } from 'next/router';
-import getUserRestaurants from '../api/restaurantData';
 import RestaurantCard from '../components/RestaurantCard';
 import { useAuth } from '../utils/context/authContext';
 import getRestaurants from '../api/externalRestaurantAPI';
+import getAllEatListRestaurants from '../api/mergedData';
+import { getUserEatList } from '../api/eatListData';
 
 function Home() {
   // const { user } = useAuth(); // TODO: COMMENT IN FOR AUTH
@@ -14,8 +15,19 @@ function Home() {
   const router = useRouter();
   const { user } = useAuth();
 
-  const getAllUserRestaurants = () => {
-    getUserRestaurants(user.uid).then(setUserRestaurants);
+  const getEatListId = () => {
+    console.warn('user:', user.uid);
+    return getUserEatList(user.uid)
+      .then((eatList) => {
+        const eatListId = eatList[0].firebaseKey;
+        return eatListId;
+      });
+  };
+
+  const getAllUserRestaurants = (eatListId) => {
+    getAllEatListRestaurants(eatListId).then((list) => {
+      setUserRestaurants(list.restaurants);
+    });
   };
 
   const getAllRestaurants = () => {
@@ -27,7 +39,13 @@ function Home() {
   };
 
   useEffect(() => {
-    getAllUserRestaurants();
+    getEatListId()
+      // eslint-disable-next-line consistent-return
+      .then((eatListId) => {
+        if (eatListId) {
+          return getAllUserRestaurants(eatListId);
+        }
+      });
     getAllRestaurants();
   }, []);
 

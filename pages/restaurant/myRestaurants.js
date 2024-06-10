@@ -13,19 +13,14 @@ export default function MyRestaurants() {
     console.warn('user:', user.uid);
     return getUserEatList(user.uid)
       .then((eatList) => {
-        console.warn('eatlist:', eatList);
         const eatListId = eatList[0].firebaseKey;
-        console.warn('eatlistid:', eatListId);
         return eatListId;
       });
   };
 
-  // const eatListId = '-NzsHP8NrA8gli-8K5O5';
-
   const getAllUserRestaurants = (eatListId) => getAllEatListRestaurants(eatListId).then((list) => {
     setUserRestaurants(list.restaurants);
     setFilteredRestaurants(list.restaurants);
-    console.warn('Restaurants:', list.restaurants);
   });
 
   useEffect(() => {
