@@ -52,8 +52,36 @@ const getUserEatList = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const addToEatList = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/eatlistRestaurants.json`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+const updateEatListRestaurants = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/eatlistRestaurants/${payload.firebaseKey}.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 export {
   getSingleEatList,
   getEatListRestaurants,
   getUserEatList,
+  addToEatList,
+  updateEatListRestaurants,
 };
