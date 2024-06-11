@@ -5,6 +5,7 @@ import getCuisines from '../../api/cuisineData';
 import getNeighborhoods from '../../api/neighborhoodData';
 import { createRestaurant, updateRestaurant } from '../../api/restaurantData';
 import { useAuth } from '../../utils/context/authContext';
+import { addToEatList, getUserEatList, updateEatListRestaurants } from '../../api/eatListData';
 
 const initialState = {
   firebaseKey: '',
@@ -20,12 +21,23 @@ export default function AddRestaurantForm({ restaurantObj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [cuisines, setCuisines] = useState([]);
   const [neighborhoods, setNeighborhoods] = useState([]);
+  const [eatListId, setEatListId] = useState('');
   const router = useRouter();
   const { user } = useAuth();
+
+  const getEatListId = () => {
+    console.warn('user:', user.uid);
+    return getUserEatList(user.uid)
+      .then((eatList) => {
+        const eatListIdKey = eatList[0].firebaseKey;
+        setEatListId(eatListIdKey);
+      });
+  };
 
   useEffect(() => {
     getCuisines().then(setCuisines);
     getNeighborhoods().then(setNeighborhoods);
+    getEatListId();
 
     if (restaurantObj.firebaseKey) {
       setFormInput(restaurantObj);
@@ -42,16 +54,25 @@ export default function AddRestaurantForm({ restaurantObj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const createAndAddToList = () => {
+      const payload = { ...formInput, createdBy: user.uid, userList: user.uid };
+      createRestaurant(payload).then(({ name: restaurantFirebaseKey }) => {
+        const patchPayload = { firebaseKey: restaurantFirebaseKey };
+        updateRestaurant(patchPayload).then(() => {
+          const payloadEatList = { eatListId, restaurantId: restaurantFirebaseKey };
+          addToEatList(payloadEatList).then(({ name: eatListFirebaseKey }) => {
+            const patchPayload2 = { firebaseKey: eatListFirebaseKey };
+            updateEatListRestaurants(patchPayload2).then(() => {
+              router.push('/restaurant/myRestaurants');
+            });
+          });
+        });
+      });
+    };
     if (restaurantObj.firebaseKey) {
       updateRestaurant(formInput).then(() => router.push('/restaurant/myRestaurants'));
     } else {
-      const payload = { ...formInput, createdBy: user.uid, userList: user.uid };
-      createRestaurant(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
-        updateRestaurant(patchPayload).then(() => {
-          router.push('/restaurant/myRestaurants');
-        });
-      });
+      createAndAddToList();
     }
   };
 

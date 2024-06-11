@@ -1,22 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { getUserRestaurants } from '../../api/restaurantData';
 import RestaurantCard from '../../components/RestaurantCard';
 import { useAuth } from '../../utils/context/authContext';
+import getAllEatListRestaurants from '../../api/mergedData';
+import { getUserEatList } from '../../api/eatListData';
 
 export default function MyRestaurants() {
   const [userRestaurants, setUserRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState(userRestaurants);
   const { user } = useAuth();
 
-  const getAllUserRestaurants = () => {
-    getUserRestaurants(user.uid).then((restaurants) => {
-      setUserRestaurants(restaurants);
-      setFilteredRestaurants(restaurants);
-    });
+  const getEatListId = () => {
+    console.warn('user:', user.uid);
+    return getUserEatList(user.uid)
+      .then((eatList) => {
+        const eatListId = eatList[0].firebaseKey;
+        return eatListId;
+      });
   };
 
+  const getAllUserRestaurants = (eatListId) => getAllEatListRestaurants(eatListId).then((list) => {
+    setUserRestaurants(list.restaurants);
+    setFilteredRestaurants(list.restaurants);
+  });
+
   useEffect(() => {
-    getAllUserRestaurants();
+    getEatListId()
+      // eslint-disable-next-line consistent-return
+      .then((eatListId) => {
+        if (eatListId) {
+          return getAllUserRestaurants(eatListId);
+        }
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filterMyList = (e) => {

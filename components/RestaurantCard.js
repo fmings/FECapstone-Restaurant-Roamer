@@ -34,11 +34,20 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
     }
   };
 
+  const restaurantName = () => {
+    if (restaurantObj.firebaseKey) {
+      return restaurantObj.name;
+    } if (restaurantObj.id) {
+      return restaurantObj.displayName.text;
+    }
+    return '';
+  };
+
   return (
     <>
       <div className="card w-96 glass">
         <div className="card-body">
-          <h2 className="card-title">{!restaurantObj.firebaseKey ? restaurantObj.displayName.text : restaurantObj.name }</h2>
+          <h2 className="card-title">{restaurantName()}</h2>
           {neighborhoods.map((neighborhood) => (
             restaurantObj.neighborhoodId === neighborhood.firebaseKey ? (
               <p className="neighborhood" key={neighborhood.firebaseKey}>{neighborhood.name}</p>
