@@ -21,6 +21,7 @@ export default function MyRestaurants() {
   const getAllUserRestaurants = (eatListId) => getAllEatListRestaurants(eatListId).then((list) => {
     setUserRestaurants(list.restaurants);
     setFilteredRestaurants(list.restaurants);
+    console.warn(list.restaurants);
   });
 
   useEffect(() => {

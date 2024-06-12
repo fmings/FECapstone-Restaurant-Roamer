@@ -39,10 +39,10 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
       }
     });
 
-    if (!onUserList) {
+    if (!onUserList && restaurantObj.id) {
       const payload = { ...restaurantObj, tried: false };
       createRestaurant(payload).then(({ name: restaurantFirebaseKey }) => {
-        const patchPayload = { firebaseKey: restaurantFirebaseKey };
+        const patchPayload = { firebaseKey: restaurantFirebaseKey, name: restaurantObj.displayName.text };
         updateRestaurant(patchPayload).then(() => {
           const payloadEatList = { eatListId: userEatList[0].firebaseKey, restaurantId: restaurantFirebaseKey };
           addToEatList(payloadEatList).then(({ name: eatListFirebaseKey }) => {
@@ -51,6 +51,14 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
               onUpdate();
             });
           });
+        });
+      });
+    } if (!onUserList && restaurantObj.firebaseKey) {
+      const payloadEatList = { eatListId: userEatList[0].firebaseKey, restaurantId: restaurantObj.firebaseKey };
+      addToEatList(payloadEatList).then(({ name: firebaseKey }) => {
+        const patchPayload = { firebaseKey };
+        updateEatListRestaurants(patchPayload).then(() => {
+          onUpdate();
         });
       });
     } else {
@@ -90,8 +98,12 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
           ))}
         </div>
         <div className="card-actions justify-end">
-          {restaurantObj.userList !== user.uid
-            ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> }
+          {userEatListRestaurants.map((restaurant) => (
+            restaurant.restaurantId === restaurantObj.firebaseKey ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button>
+          ))}
+          {/* {restaurantObj.userList !== user.uid
+            ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> } */}
+
           {restaurantObj.userList
             ? (
               <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
