@@ -78,10 +78,23 @@ const updateEatListRestaurants = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const deleteRestFromEatList = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/eatlistRestaurants/${firebaseKey}.json`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 export {
   getSingleEatList,
   getEatListRestaurants,
   getUserEatList,
   addToEatList,
   updateEatListRestaurants,
+  deleteRestFromEatList,
 };

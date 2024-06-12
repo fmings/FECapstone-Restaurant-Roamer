@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import RestaurantCard from '../../components/RestaurantCard';
 import getGoogleRestaurants from '../../api/externalRestaurantAPI';
+import { getRestaurants } from '../../api/restaurantData';
 
 const defineGoogleCuisine = (restaurantObj) => {
   const googleRestaurantObj = { ...restaurantObj };
@@ -49,14 +50,16 @@ const defineGoogleCuisine = (restaurantObj) => {
   return googleRestaurantObj;
 };
 export default function AllRestaurants() {
+  const [googleRestaurants, setGoogleRestaurants] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
 
   const getAllRestaurants = () => {
     getGoogleRestaurants()
       .then((fetchedRestaurants) => {
         const updatedRestaurants = fetchedRestaurants.map((restaurant) => defineGoogleCuisine(restaurant));
-        setRestaurants(updatedRestaurants);
+        setGoogleRestaurants(updatedRestaurants);
       });
+    getRestaurants().then(setRestaurants);
   };
 
   useEffect(() => {
@@ -69,8 +72,10 @@ export default function AllRestaurants() {
         All Restaurants
       </h1>
       <div className="d-flex flex-wrap">
-        {restaurants.map((restaurant) => (
+        {googleRestaurants.map((restaurant) => (
           <RestaurantCard restaurantObj={restaurant} key={restaurant.id} onUpdate={getAllRestaurants} />))}
+        {restaurants.map((restaurant) => (
+          <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={getAllRestaurants} />))}
       </div>
     </div>
   );

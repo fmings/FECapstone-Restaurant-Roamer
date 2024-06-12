@@ -3,13 +3,23 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import getNeighborhoods from '../api/neighborhoodData';
 import getCuisines from '../api/cuisineData';
-import { deleteSingleRestaurant, updateRestaurant } from '../api/restaurantData';
+import { createRestaurant, deleteSingleRestaurant, updateRestaurant } from '../api/restaurantData';
 import { useAuth } from '../utils/context/authContext';
+import {
+  addToEatList, deleteRestFromEatList, getEatListRestaurants, getUserEatList, updateEatListRestaurants,
+} from '../api/eatListData';
 
 export default function RestaurantCard({ restaurantObj, onUpdate }) {
   const [neighborhoods, setNeighborhoods] = useState([]);
   const [cuisines, setCuisines] = useState([]);
+  const [userEatListRestaurants, setUserEatListRestaurants] = useState([]);
+  const [userEatList, setUserEatList] = useState({});
   const { user } = useAuth();
+
+  useEffect(() => {
+    getEatListRestaurants().then(setUserEatListRestaurants);
+    getUserEatList(user.uid).then(setUserEatList);
+  }, []);
 
   useEffect(() => {
     getNeighborhoods().then(setNeighborhoods);
@@ -21,10 +31,32 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
   }, []);
 
   const toggleToUserList = () => {
-    if (!restaurantObj.userList) {
-      updateRestaurant({ ...restaurantObj, userList: user.uid }).then(() => onUpdate());
+    let onUserList = false;
+
+    userEatListRestaurants.forEach((restaurant) => {
+      if (restaurant.restaurantId === restaurantObj.firebaseKey || restaurantObj.id) {
+        onUserList = true;
+      }
+    });
+
+    if (!onUserList) {
+      const payload = { ...restaurantObj, tried: false };
+      createRestaurant(payload).then(({ name: restaurantFirebaseKey }) => {
+        const patchPayload = { firebaseKey: restaurantFirebaseKey };
+        updateRestaurant(patchPayload).then(() => {
+          const payloadEatList = { eatListId: userEatList[0].firebaseKey, restaurantId: restaurantFirebaseKey };
+          addToEatList(payloadEatList).then(({ name: eatListFirebaseKey }) => {
+            const patchPayload2 = { firebaseKey: eatListFirebaseKey, eatListId: userEatList.firebaseKey };
+            updateEatListRestaurants(patchPayload2).then(() => {
+              onUpdate();
+            });
+          });
+        });
+      });
     } else {
-      updateRestaurant({ ...restaurantObj, userList: null }).then(() => onUpdate());
+      deleteRestFromEatList(restaurantObj.firebaseKey).then(() => {
+        onUpdate();
+      });
     }
   };
 
