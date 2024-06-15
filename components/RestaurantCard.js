@@ -4,22 +4,16 @@ import Link from 'next/link';
 import getNeighborhoods from '../api/neighborhoodData';
 import getCuisines from '../api/cuisineData';
 import { createRestaurant, deleteSingleRestaurant, updateRestaurant } from '../api/restaurantData';
-import { useAuth } from '../utils/context/authContext';
+// import { useAuth } from '../utils/context/authContext';
 import {
-  addToEatList, deleteRestFromEatList, getEatListRestaurants, getUserEatList, updateEatListRestaurants,
+  addToEatList, deleteRestFromEatList, updateEatListRestaurants,
 } from '../api/eatListData';
 
-export default function RestaurantCard({ restaurantObj, onUpdate }) {
+export default function RestaurantCard({
+  restaurantObj, onUpdate, userRestaurants, eatListId, eatListRestaurantKeys,
+}) {
   const [neighborhoods, setNeighborhoods] = useState([]);
   const [cuisines, setCuisines] = useState([]);
-  const [userEatListRestaurants, setUserEatListRestaurants] = useState([]);
-  const [userEatList, setUserEatList] = useState({});
-  const { user } = useAuth();
-
-  useEffect(() => {
-    getEatListRestaurants().then(setUserEatListRestaurants);
-    getUserEatList(user.uid).then(setUserEatList);
-  }, []);
 
   useEffect(() => {
     getNeighborhoods().then(setNeighborhoods);
@@ -30,31 +24,39 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
     };
   }, []);
 
+  const onUserList = () => {
+    if (userRestaurants) {
+      return eatListRestaurantKeys.some((restaurant) => restaurant.restaurantId === restaurantObj.firebaseKey);
+    }
+    return false;
+  };
+
   const toggleToUserList = () => {
-    let onUserList = false;
+    const isOnUserList = onUserList();
+    console.warn('check user list status', isOnUserList);
 
-    userEatListRestaurants.forEach((restaurant) => {
-      if (restaurant.restaurantId === restaurantObj.firebaseKey || restaurantObj.id) {
-        onUserList = true;
-      }
-    });
+    // userEatListRestaurants.forEach((restaurant) => {
+    //   if (restaurant.restaurantId === restaurantObj.firebaseKey || restaurantObj.id) {
+    //     onUserList = true;
+    //   }
+    // });
 
-    if (!onUserList && restaurantObj.id) {
+    if (!isOnUserList && restaurantObj.id) {
       const payload = { ...restaurantObj, tried: false };
       createRestaurant(payload).then(({ name: restaurantFirebaseKey }) => {
         const patchPayload = { firebaseKey: restaurantFirebaseKey, name: restaurantObj.displayName.text };
         updateRestaurant(patchPayload).then(() => {
-          const payloadEatList = { eatListId: userEatList[0].firebaseKey, restaurantId: restaurantFirebaseKey };
+          const payloadEatList = { eatListId, restaurantId: restaurantFirebaseKey };
           addToEatList(payloadEatList).then(({ name: eatListFirebaseKey }) => {
-            const patchPayload2 = { firebaseKey: eatListFirebaseKey, eatListId: userEatList.firebaseKey };
+            const patchPayload2 = { firebaseKey: eatListFirebaseKey, eatListId };
             updateEatListRestaurants(patchPayload2).then(() => {
               onUpdate();
             });
           });
         });
       });
-    } if (!onUserList && restaurantObj.firebaseKey) {
-      const payloadEatList = { eatListId: userEatList[0].firebaseKey, restaurantId: restaurantObj.firebaseKey };
+    } if (!isOnUserList && restaurantObj.firebaseKey) {
+      const payloadEatList = { eatListId, restaurantId: restaurantObj.firebaseKey };
       addToEatList(payloadEatList).then(({ name: firebaseKey }) => {
         const patchPayload = { firebaseKey };
         updateEatListRestaurants(patchPayload).then(() => {
@@ -83,6 +85,8 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
     return '';
   };
 
+  const restaurantOnUserList = onUserList();
+
   return (
     <>
       <div className="card w-96 glass">
@@ -98,11 +102,11 @@ export default function RestaurantCard({ restaurantObj, onUpdate }) {
           ))}
         </div>
         <div className="card-actions justify-end">
-          {userEatListRestaurants.map((restaurant) => (
+          {/* {userEatListRestaurants.map((restaurant) => (
             restaurant.restaurantId === restaurantObj.firebaseKey ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button>
-          ))}
-          {/* {restaurantObj.userList !== user.uid
-            ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> } */}
+          ))} */}
+          {restaurantOnUserList
+            ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> }
 
           {restaurantObj.userList
             ? (
@@ -134,4 +138,23 @@ RestaurantCard.propTypes = {
     id: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
+  userRestaurants: PropTypes.arrayOf(PropTypes.shape({
+    firebaseKey: PropTypes.string,
+    createdBy: PropTypes.string,
+    userList: PropTypes.string,
+    displayName: PropTypes.string,
+    name: PropTypes.string,
+    logo: PropTypes.string,
+    neighborhoodId: PropTypes.string,
+    cuisineId: PropTypes.string,
+    tried: PropTypes.bool,
+    primaryType: PropTypes.string,
+    id: PropTypes.string,
+  })).isRequired,
+  eatListId: PropTypes.string.isRequired,
+  eatListRestaurantKeys: PropTypes.arrayOf(PropTypes.shape({
+    firebaseKey: PropTypes.string,
+    eatListId: PropTypes.string,
+    restaurantId: PropTypes.string,
+  })).isRequired,
 };
