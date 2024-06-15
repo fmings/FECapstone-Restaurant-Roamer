@@ -67,7 +67,6 @@ export default function AllRestaurants() {
       .then((fetchedRestaurants) => {
         const filteredGoogleRestaurants = fetchedRestaurants.filter((restaurant) => !userRestaurants.some((item) => item.id === restaurant.id));
         const updatedRestaurants = filteredGoogleRestaurants.map((restaurant) => defineGoogleCuisine(restaurant));
-        console.warn('filtered', filteredGoogleRestaurants);
         setGoogleRestaurants(updatedRestaurants);
       });
     getRestaurants().then(setFirebaseRestaurants);
@@ -108,7 +107,7 @@ export default function AllRestaurants() {
 
   useEffect(() => {
     getAllRestaurants();
-  }, []);
+  }, [userRestaurants]);
 
   const handleUpdate = (id) => {
     getAllRestaurants();
