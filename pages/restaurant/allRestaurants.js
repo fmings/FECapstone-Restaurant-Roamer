@@ -54,19 +54,23 @@ const defineGoogleCuisine = (restaurantObj) => {
 };
 export default function AllRestaurants() {
   const [googleRestaurants, setGoogleRestaurants] = useState([]);
-  const [restaurants, setRestaurants] = useState([]);
+  const [firebaseRestaurants, setFirebaseRestaurants] = useState([]);
   const [eatListId, setEatListId] = useState(null);
   const [userRestaurants, setUserRestaurants] = useState([]);
   const [eatListRestaurantKeys, setEatListRestaurantsKeys] = useState([]);
   const { user } = useAuth();
 
+  // const filterFirebaseRestaurants = (restaurants) => restaurants.filter((restaurant) => !restaurant.id);
+
   const getAllRestaurants = () => {
     getGoogleRestaurants()
       .then((fetchedRestaurants) => {
-        const updatedRestaurants = fetchedRestaurants.map((restaurant) => defineGoogleCuisine(restaurant));
+        const filteredGoogleRestaurants = fetchedRestaurants.filter((restaurant) => !userRestaurants.some((item) => item.id === restaurant.id));
+        const updatedRestaurants = filteredGoogleRestaurants.map((restaurant) => defineGoogleCuisine(restaurant));
         setGoogleRestaurants(updatedRestaurants);
       });
-    getRestaurants().then(setRestaurants);
+    getRestaurants().then(setFirebaseRestaurants);
+    // const filteredFirebaseRestaurants = filterFirebaseRestaurants(restaurants);
   };
 
   const getEatListId = () => {
@@ -103,7 +107,7 @@ export default function AllRestaurants() {
 
   useEffect(() => {
     getAllRestaurants();
-  }, []);
+  }, [userRestaurants]);
 
   const handleUpdate = (id) => {
     getAllRestaurants();
@@ -119,7 +123,7 @@ export default function AllRestaurants() {
       <div className="d-flex flex-wrap">
         {googleRestaurants.map((restaurant) => (
           <RestaurantCard restaurantObj={restaurant} key={restaurant.id} onUpdate={() => handleUpdate(eatListId)} eatListId={eatListId} userRestaurants={userRestaurants} eatListRestaurantKeys={eatListRestaurantKeys} />))}
-        {restaurants.map((restaurant) => (
+        {firebaseRestaurants.map((restaurant) => (
           <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={() => handleUpdate(eatListId)} eatListId={eatListId} userRestaurants={userRestaurants} eatListRestaurantKeys={eatListRestaurantKeys} />))}
       </div>
     </div>
