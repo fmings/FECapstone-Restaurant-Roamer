@@ -105,6 +105,12 @@ export default function AllRestaurants() {
     getAllRestaurants();
   }, []);
 
+  const handleUpdate = (id) => {
+    getAllRestaurants();
+    getAllUserRestaurants(id);
+    getEatListRestaurantKeys(id);
+  };
+
   return (
     <div className="min-h-screen restSuggestor">
       <h1 className="text-3xl text-white font-bold underline">
@@ -112,9 +118,9 @@ export default function AllRestaurants() {
       </h1>
       <div className="d-flex flex-wrap">
         {googleRestaurants.map((restaurant) => (
-          <RestaurantCard restaurantObj={restaurant} key={restaurant.id} onUpdate={getAllRestaurants} eatListId={eatListId} userRestaurants={userRestaurants} eatListRestaurantKeys={eatListRestaurantKeys} />))}
+          <RestaurantCard restaurantObj={restaurant} key={restaurant.id} onUpdate={() => handleUpdate(eatListId)} eatListId={eatListId} userRestaurants={userRestaurants} eatListRestaurantKeys={eatListRestaurantKeys} />))}
         {restaurants.map((restaurant) => (
-          <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={getAllRestaurants} eatListId={eatListId} userRestaurants={userRestaurants} eatListRestaurantKeys={eatListRestaurantKeys} />))}
+          <RestaurantCard restaurantObj={restaurant} key={restaurant.firebaseKey} onUpdate={() => handleUpdate(eatListId)} eatListId={eatListId} userRestaurants={userRestaurants} eatListRestaurantKeys={eatListRestaurantKeys} />))}
       </div>
     </div>
   );

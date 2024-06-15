@@ -33,13 +33,6 @@ export default function RestaurantCard({
 
   const toggleToUserList = () => {
     const isOnUserList = onUserList();
-    console.warn('check user list status', isOnUserList);
-
-    // userEatListRestaurants.forEach((restaurant) => {
-    //   if (restaurant.restaurantId === restaurantObj.firebaseKey || restaurantObj.id) {
-    //     onUserList = true;
-    //   }
-    // });
 
     if (!isOnUserList && restaurantObj.id) {
       const payload = { ...restaurantObj, tried: false };
@@ -63,8 +56,11 @@ export default function RestaurantCard({
           onUpdate();
         });
       });
-    } else {
-      deleteRestFromEatList(restaurantObj.firebaseKey).then(() => {
+    } if (isOnUserList) {
+      const restaurantToDelete = eatListRestaurantKeys.find((restaurant) => restaurant.restaurantId === restaurantObj.firebaseKey);
+      console.warn('restauranttodelete:', restaurantToDelete);
+      console.warn('eatlistfirebasekeysinremove', eatListRestaurantKeys);
+      deleteRestFromEatList(restaurantToDelete.firebaseKey).then(() => {
         onUpdate();
       });
     }
@@ -102,9 +98,6 @@ export default function RestaurantCard({
           ))}
         </div>
         <div className="card-actions justify-end">
-          {/* {userEatListRestaurants.map((restaurant) => (
-            restaurant.restaurantId === restaurantObj.firebaseKey ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button>
-          ))} */}
           {restaurantOnUserList
             ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> }
 

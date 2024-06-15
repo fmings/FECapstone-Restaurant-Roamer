@@ -44,6 +44,11 @@ export default function MyRestaurants() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleUpdate = (id) => {
+    getAllUserRestaurants(id);
+    getEatListRestaurantKeys(id);
+  };
+
   const filterMyList = (e) => {
     let updatedUserList;
     if (e.target.id === 'want-to-visit') {
@@ -66,12 +71,11 @@ export default function MyRestaurants() {
         <button type="button" className="btn btn-accent navButton" id="all" onClick={filterMyList}>All</button>
       </div>
       <div className="d-flex flex-wrap">
-        {console.warn('eatlistrestkeysonmyrests', eatListRestaurantKeys)}
         {filteredRestaurants.map((userRestaurant) => (
           <RestaurantCard
             restaurantObj={userRestaurant}
             key={userRestaurant.firebaseKey}
-            onUpdate={getAllUserRestaurants}
+            onUpdate={() => handleUpdate(eatListId)}
             userRestaurants={userRestaurants}
             eatListId={eatListId}
             eatListRestaurantKeys={eatListRestaurantKeys}
