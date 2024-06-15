@@ -26,14 +26,16 @@ export default function RestaurantCard({
 
   const onUserList = () => {
     if (userRestaurants) {
-      return eatListRestaurantKeys.some((restaurant) => restaurant.restaurantId === restaurantObj.firebaseKey);
+      return eatListRestaurantKeys.some((restaurant) => {
+        const isOnList = restaurant.restaurantId === restaurantObj.firebaseKey;
+        return isOnList;
+      });
     }
     return false;
   };
 
   const toggleToUserList = () => {
     const isOnUserList = onUserList();
-
     if (!isOnUserList && restaurantObj.id) {
       const payload = { ...restaurantObj, tried: false };
       createRestaurant(payload).then(({ name: restaurantFirebaseKey }) => {
@@ -43,32 +45,38 @@ export default function RestaurantCard({
           addToEatList(payloadEatList).then(({ name: eatListFirebaseKey }) => {
             const patchPayload2 = { firebaseKey: eatListFirebaseKey, eatListId };
             updateEatListRestaurants(patchPayload2).then(() => {
-              onUpdate();
+              onUpdate(eatListId);
             });
           });
         });
       });
-    } if (!isOnUserList && restaurantObj.firebaseKey) {
+    } else if (!isOnUserList && restaurantObj.firebaseKey) {
       const payloadEatList = { eatListId, restaurantId: restaurantObj.firebaseKey };
       addToEatList(payloadEatList).then(({ name: firebaseKey }) => {
         const patchPayload = { firebaseKey };
         updateEatListRestaurants(patchPayload).then(() => {
-          onUpdate();
+          onUpdate(eatListId);
         });
       });
-    } if (isOnUserList) {
+    } else if (isOnUserList) {
       const restaurantToDelete = eatListRestaurantKeys.find((restaurant) => restaurant.restaurantId === restaurantObj.firebaseKey);
-      console.warn('restauranttodelete:', restaurantToDelete);
-      console.warn('eatlistfirebasekeysinremove', eatListRestaurantKeys);
-      deleteRestFromEatList(restaurantToDelete.firebaseKey).then(() => {
-        onUpdate();
-      });
+      if (restaurantObj.id) {
+        deleteRestFromEatList(restaurantToDelete.firebaseKey)
+          .then(() => deleteSingleRestaurant(restaurantObj.firebaseKey))
+          .then(() => {
+            onUpdate(eatListId);
+          });
+      } else {
+        deleteRestFromEatList(restaurantToDelete.firebaseKey).then(() => {
+          onUpdate(eatListId);
+        });
+      }
     }
   };
 
   const deleteRestaurant = () => {
     if (window.confirm(`Are you sure you want to permanently delete ${restaurantObj.displayName.text} from the database?`)) {
-      deleteSingleRestaurant(restaurantObj.firebaseKey).then(() => onUpdate());
+      deleteSingleRestaurant(restaurantObj.firebaseKey).then(() => onUpdate(eatListId));
     }
   };
 
@@ -101,7 +109,7 @@ export default function RestaurantCard({
           {restaurantOnUserList
             ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> }
 
-          {restaurantObj.userList
+          {restaurantOnUserList
             ? (
               <Link href={`/restaurant/edit/${restaurantObj.firebaseKey}`} passHref>
                 <button type="button" className="btn-nobkgrd"><img className="btn-image" src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></button>
@@ -120,7 +128,6 @@ RestaurantCard.propTypes = {
   restaurantObj: PropTypes.shape({
     firebaseKey: PropTypes.string,
     createdBy: PropTypes.string,
-    userList: PropTypes.string,
     displayName: PropTypes.string,
     name: PropTypes.string,
     logo: PropTypes.string,
@@ -134,7 +141,6 @@ RestaurantCard.propTypes = {
   userRestaurants: PropTypes.arrayOf(PropTypes.shape({
     firebaseKey: PropTypes.string,
     createdBy: PropTypes.string,
-    userList: PropTypes.string,
     displayName: PropTypes.string,
     name: PropTypes.string,
     logo: PropTypes.string,
