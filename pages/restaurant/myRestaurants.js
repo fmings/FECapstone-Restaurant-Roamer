@@ -2,23 +2,30 @@ import React, { useEffect, useState } from 'react';
 import RestaurantCard from '../../components/RestaurantCard';
 import { useAuth } from '../../utils/context/authContext';
 import getAllEatListRestaurants from '../../api/mergedData';
-import { getUserEatList } from '../../api/eatListData';
+import { getEatListRestaurants, getUserEatList } from '../../api/eatListData';
 
 export default function MyRestaurants() {
   const [userRestaurants, setUserRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState(userRestaurants);
+  const [eatListId, setEatListId] = useState(null);
+  const [eatListRestaurantKeys, setEatListRestaurantsKeys] = useState([]);
   const { user } = useAuth();
 
   const getEatListId = () => {
     console.warn('user:', user.uid);
     return getUserEatList(user.uid)
       .then((eatList) => {
-        const eatListId = eatList[0].firebaseKey;
-        return eatListId;
+        const id = eatList[0].firebaseKey;
+        setEatListId(id);
+        return id;
       });
   };
 
-  const getAllUserRestaurants = (eatListId) => getAllEatListRestaurants(eatListId).then((list) => {
+  const getEatListRestaurantKeys = (id) => {
+    getEatListRestaurants(id).then(setEatListRestaurantsKeys);
+  };
+
+  const getAllUserRestaurants = (id) => getAllEatListRestaurants(id).then((list) => {
     setUserRestaurants(list.restaurants);
     setFilteredRestaurants(list.restaurants);
   });
@@ -26,9 +33,12 @@ export default function MyRestaurants() {
   useEffect(() => {
     getEatListId()
       // eslint-disable-next-line consistent-return
-      .then((eatListId) => {
-        if (eatListId) {
-          return getAllUserRestaurants(eatListId);
+      .then((id) => {
+        if (id) {
+          return Promise.all([
+            getAllUserRestaurants(id),
+            getEatListRestaurantKeys(id),
+          ]);
         }
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,8 +66,17 @@ export default function MyRestaurants() {
         <button type="button" className="btn btn-accent navButton" id="all" onClick={filterMyList}>All</button>
       </div>
       <div className="d-flex flex-wrap">
+        {console.warn('eatlistrestkeysonmyrests', eatListRestaurantKeys)}
         {filteredRestaurants.map((userRestaurant) => (
-          <RestaurantCard restaurantObj={userRestaurant} key={userRestaurant.firebaseKey} onUpdate={getAllUserRestaurants} />))}
+          <RestaurantCard
+            restaurantObj={userRestaurant}
+            key={userRestaurant.firebaseKey}
+            onUpdate={getAllUserRestaurants}
+            userRestaurants={userRestaurants}
+            eatListId={eatListId}
+            eatListRestaurantKeys={eatListRestaurantKeys}
+          />
+        ))}
       </div>
     </div>
   );
