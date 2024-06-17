@@ -75,7 +75,7 @@ export default function RestaurantCard({
   };
 
   const deleteRestaurant = () => {
-    if (window.confirm(`Are you sure you want to permanently delete ${restaurantObj.displayName.text} from the database?`)) {
+    if (window.confirm(`Are you sure you want to permanently delete ${restaurantObj.name} from the database?`)) {
       deleteSingleRestaurant(restaurantObj.firebaseKey).then(() => onUpdate(eatListId));
     }
   };
