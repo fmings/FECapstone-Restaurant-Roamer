@@ -186,7 +186,7 @@ body {
   margin-top: 20px;
 }
 
-#want-to-visit, #visited, #all{
+#want-to-visit, #visited, #all, #favorites{
   background-color: black;
   color: #C82525;
   width: 150px;
