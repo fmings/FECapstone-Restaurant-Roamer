@@ -112,6 +112,16 @@ export default function RestaurantCard({
     return null;
   };
 
+  const triedCheck = () => {
+    if (restaurantOnUserList && restaurantObj.tried) {
+      return true;
+    }
+    if (restaurantOnUserList && !restaurantObj.tried) {
+      return false;
+    }
+    return null;
+  };
+
   const toggleFavorite = () => {
     if (restaurantObj.favorite) {
       updateRestaurant({ ...restaurantObj, favorite: false }).then(() => onUpdate());
@@ -120,11 +130,21 @@ export default function RestaurantCard({
     }
   };
 
+  const toggleTried = () => {
+    if (restaurantObj.tried) {
+      updateRestaurant({ ...restaurantObj, tried: false }).then(() => onUpdate());
+    } else {
+      updateRestaurant({ ...restaurantObj, tried: true }).then(() => onUpdate());
+    }
+  };
+
   return (
     <>
       <div className="card w-96 glass">
-        {favoriteCheck() !== null && (favoriteCheck()
-          ? <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85135&format=png&color=000000" alt="favorited icon" width="20" /></button> : <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85033&format=png&color=000000" alt="unfavorited icon" width="20" /></button>)}
+        <div className="card-actions justify-end">
+          {favoriteCheck() !== null && (favoriteCheck()
+            ? <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85135&format=png&color=000000" alt="favorited icon" width="20" /></button> : <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85033&format=png&color=000000" alt="unfavorited icon" width="20" /></button>)}
+        </div>
         <div className="card-body">
           <h2 className="card-title">{restaurantName()}</h2>
           {neighborhoods.map((neighborhood) => (
@@ -137,6 +157,8 @@ export default function RestaurantCard({
           ))}
         </div>
         <div className="card-actions justify-end">
+          {triedCheck() !== null && (triedCheck()
+            ? <button type="button" className="btn-nobkgrd" onClick={toggleTried}><img className="btn-image" src="https://img.icons8.com/?size=100&id=40902&format=png&color=000000" alt="tried icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleTried}><img className="btn-image" src="https://img.icons8.com/?size=100&id=25534&format=png&color=000000" alt="not tried icon" width="20" /></button>)}
           {restaurantOnUserList
             ? <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=1504&format=png&color=000000" alt="add icon" width="20" /></button> : <button type="button" className="btn-nobkgrd" onClick={toggleToUserList}><img className="btn-image" src="https://img.icons8.com/?size=100&id=24717&format=png&color=000000" alt="add icon" width="20" /></button> }
 
