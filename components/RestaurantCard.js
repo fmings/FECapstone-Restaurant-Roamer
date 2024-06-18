@@ -102,6 +102,15 @@ export default function RestaurantCard({
   };
 
   const restaurantOnUserList = onUserList();
+  const favoriteCheck = () => {
+    if (restaurantOnUserList && restaurantObj.favorite) {
+      return true;
+    }
+    if (restaurantOnUserList && !restaurantObj.favorite) {
+      return false;
+    }
+    return null;
+  };
 
   const toggleFavorite = () => {
     if (restaurantObj.favorite) {
@@ -114,8 +123,8 @@ export default function RestaurantCard({
   return (
     <>
       <div className="card w-96 glass">
-        {restaurantOnUserList && restaurantObj.favorite
-          ? <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85135&format=png&color=000000" alt="favorited icon" width="20" /></button> : <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85033&format=png&color=000000" alt="unfavorited icon" width="20" /></button> }
+        {favoriteCheck() !== null && (favoriteCheck()
+          ? <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85135&format=png&color=000000" alt="favorited icon" width="20" /></button> : <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85033&format=png&color=000000" alt="unfavorited icon" width="20" /></button>)}
         <div className="card-body">
           <h2 className="card-title">{restaurantName()}</h2>
           {neighborhoods.map((neighborhood) => (
