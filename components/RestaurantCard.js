@@ -103,9 +103,19 @@ export default function RestaurantCard({
 
   const restaurantOnUserList = onUserList();
 
+  const toggleFavorite = () => {
+    if (restaurantObj.favorite) {
+      updateRestaurant({ ...restaurantObj, favorite: false }).then(() => onUpdate());
+    } else {
+      updateRestaurant({ ...restaurantObj, favorite: true }).then(() => onUpdate());
+    }
+  };
+
   return (
     <>
       <div className="card w-96 glass">
+        {restaurantOnUserList && restaurantObj.favorite
+          ? <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85135&format=png&color=000000" alt="favorited icon" width="20" /></button> : <button type="button" className="btn-nobkgrd favorite" onClick={toggleFavorite}><img className="btn-image" src="https://img.icons8.com/?size=100&id=85033&format=png&color=000000" alt="unfavorited icon" width="20" /></button> }
         <div className="card-body">
           <h2 className="card-title">{restaurantName()}</h2>
           {neighborhoods.map((neighborhood) => (
@@ -148,6 +158,7 @@ RestaurantCard.propTypes = {
     tried: PropTypes.bool,
     primaryType: PropTypes.string,
     id: PropTypes.string,
+    favorite: PropTypes.bool,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
   userRestaurants: PropTypes.arrayOf(PropTypes.shape({
@@ -161,6 +172,7 @@ RestaurantCard.propTypes = {
     tried: PropTypes.bool,
     primaryType: PropTypes.string,
     id: PropTypes.string,
+    favorite: PropTypes.bool,
   })).isRequired,
   eatListId: PropTypes.string.isRequired,
   eatListRestaurantKeys: PropTypes.arrayOf(PropTypes.shape({
