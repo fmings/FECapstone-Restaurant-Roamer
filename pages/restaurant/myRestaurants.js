@@ -55,6 +55,8 @@ export default function MyRestaurants() {
       updatedUserList = userRestaurants.filter((userRestaurant) => (!userRestaurant.tried));
     } else if (e.target.id === 'visited') {
       updatedUserList = userRestaurants.filter((userRestaurant) => (userRestaurant.tried));
+    } else if (e.target.id === 'favorites') {
+      updatedUserList = userRestaurants.filter((userRestaurant) => (userRestaurant.favorite));
     } else if (e.target.id === 'all') {
       updatedUserList = userRestaurants;
     }
@@ -68,6 +70,7 @@ export default function MyRestaurants() {
       <div className="filterButtons">
         <button type="button" className="btn btn-accent navButton" id="want-to-visit" onClick={filterMyList}>Want to Visit</button>
         <button type="button" className="btn btn-accent navButton" id="visited" onClick={filterMyList}>Visited</button>
+        <button type="button" className="btn btn-accent navButton" id="favorites" onClick={filterMyList}>Favorites</button>
         <button type="button" className="btn btn-accent navButton" id="all" onClick={filterMyList}>All</button>
       </div>
       <div className="d-flex flex-wrap">
