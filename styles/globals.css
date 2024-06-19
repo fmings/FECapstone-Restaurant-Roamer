@@ -198,16 +198,24 @@ body {
 }
 
 .selectFields{
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
   min-width: 200px;
 }
 
 select{
   min-width:400px;
   margin-bottom: 10px;
+}
+
+.formFields {
+  width: 400px;
+  text-align: center;
+}
+
+.formContainer {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .submit-btn{

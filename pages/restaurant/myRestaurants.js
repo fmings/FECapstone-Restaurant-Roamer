@@ -66,7 +66,7 @@ export default function MyRestaurants() {
 
   return (
     <div className="min-h-screen">
-      <h1 className="text-3xl text-white font-bold underline restSuggestor">My Restaurants</h1>
+      <h1 className="text-3xl text-white font-bold underline restSuggestor">My Eat List</h1>
       <div className="filterButtons">
         <button type="button" className="btn btn-accent navButton" id="want-to-visit" onClick={filterMyList}>Want to Visit</button>
         <button type="button" className="btn btn-accent navButton" id="visited" onClick={filterMyList}>Visited</button>
