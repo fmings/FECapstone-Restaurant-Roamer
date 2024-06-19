@@ -79,31 +79,21 @@ export default function AddRestaurantForm({ restaurantObj }) {
   return (
     <div className="min-h-screen">
       <form onSubmit={handleSubmit}>
-        <label className="input input-bordered flex items-center gap-2">
-          Restaurant Name
-          <input
-            type="text"
-            className="grow"
-            placeholder="Enter Restaurant Name"
-            name="name"
-            value={formInput.name}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label className="input input-bordered flex items-center gap-2">
-          Logo/Image
-          <input
-            type="text"
-            className="grow"
-            placeholder="Add URL for Restaurant Logo"
-            name="logo"
-            value={formInput.logo}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <div className="selectFields">
+        <div className="formFields">
+          <label className="input input-bordered flex items-center gap-2">
+            Restaurant Name
+            <input
+              type="text"
+              className="grow"
+              placeholder="Enter Restaurant Name"
+              name="name"
+              value={formInput.name}
+              onChange={handleChange}
+              required
+            />
+          </label>
+        </div>
+        <div className="selectFields formFields">
           <div>
             <select
               className="select select-bordered w-full max-w-xs"
@@ -125,7 +115,7 @@ export default function AddRestaurantForm({ restaurantObj }) {
               }
             </select>
           </div>
-          <div>
+          <div className="formFields">
             <select
               className="select select-bordered w-full max-w-xs"
               name="neighborhoodId"
@@ -146,7 +136,7 @@ export default function AddRestaurantForm({ restaurantObj }) {
             </select>
           </div>
         </div>
-        <div className="form-control tried">
+        <div className="form-control tried formFields">
           <label className="label cursor-pointer tried">
             <span className="label-text">Tried?</span>
             <input
@@ -164,7 +154,9 @@ export default function AddRestaurantForm({ restaurantObj }) {
             />
           </label>
         </div>
-        <button type="submit" className="submit-btn btn btn-accent">{restaurantObj.firebaseKey ? 'Update' : 'Add'} Restaurant</button>
+        <div className="formFields">
+          <button type="submit" className="submit-btn btn btn-accent">{restaurantObj.firebaseKey ? 'Update' : 'Add'} Restaurant</button>
+        </div>
       </form>
     </div>
   );
@@ -176,7 +168,6 @@ AddRestaurantForm.propTypes = {
     createdBy: PropTypes.string,
     userList: PropTypes.string,
     name: PropTypes.string,
-    logo: PropTypes.string,
     neighborhoodId: PropTypes.string,
     cuisineId: PropTypes.string,
     tried: PropTypes.bool,
