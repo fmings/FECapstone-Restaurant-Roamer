@@ -8,12 +8,14 @@ import { createRestaurant, deleteSingleRestaurant, updateRestaurant } from '../a
 import {
   addToEatList, deleteRestFromEatList, updateEatListRestaurants,
 } from '../api/eatListData';
+import { useAuth } from '../utils/context/authContext';
 
 export default function RestaurantCard({
   restaurantObj, onUpdate, userRestaurants, eatListId, eatListRestaurantKeys,
 }) {
   const [neighborhoods, setNeighborhoods] = useState([]);
   const [cuisines, setCuisines] = useState([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     getNeighborhoods().then(setNeighborhoods);
@@ -168,7 +170,7 @@ export default function RestaurantCard({
                 <button type="button" className="btn-nobkgrd"><img className="btn-image" src="https://img.icons8.com/?size=100&id=15049&format=png&color=000000" alt="edit icon" width="20" /></button>
               </Link>
             ) : '' }
-          {!restaurantObj.id
+          {restaurantObj.createdBy === user.uid
             ? <button type="button" className="btn-nobkgrd" onClick={deleteRestaurant}><img className="btn-image" src="https://img.icons8.com/?size=100&id=99933&format=png&color=000000" alt="delete icon" width="20" /></button> : ''}
 
         </div>
