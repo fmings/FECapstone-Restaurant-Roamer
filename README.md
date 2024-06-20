@@ -28,10 +28,13 @@ With this app, you can:
 
 
 ## Video Walkthrough of Restaurant Roamer
+https://www.loom.com/share/266fa3fa1f0e4b769638451cef3d06b8?sid=58fe7598-c407-4606-ad41-cdf77f08e9c3
 
 ## Relevant Links
 - [Check out the deployed site](https://restaurantroamer.netlify.app/)
 - [Project Board](https://github.com/users/fmings/projects/5/views/1)
+- [ERD](https://dbdiagram.io/d/Restaurant-Roamer-663fbc1e9e85a46d559649d1)
+- [Wireframe](https://www.figma.com/design/L5nYpOxwBGQVTugxjSYxSC/Felicia's-FE-Capstone?node-id=0-1&t=jLLdCppNTRhHXUPt-0)
 
 ## Project Screenshots
 <img width="1148" alt="Login Page" src="images\readme-sign-in-page.png">
