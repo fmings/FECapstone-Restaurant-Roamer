@@ -14,7 +14,9 @@ export default function EditRestaurant() {
   return (
     <div>
       <h1 className="text-3xl text-white font-bold underline restSuggestor">Edit Restaurant</h1>
-      <AddRestaurantForm restaurantObj={editRestaurant} />
+      <div className="formContainer">
+        <AddRestaurantForm restaurantObj={editRestaurant} />
+      </div>
     </div>
   );
 }

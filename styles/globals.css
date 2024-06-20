@@ -29,6 +29,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .logo-img{
@@ -186,7 +187,7 @@ body {
   margin-top: 20px;
 }
 
-#want-to-visit, #visited, #all{
+#want-to-visit, #visited, #all, #favorites{
   background-color: black;
   color: #C82525;
   width: 150px;
@@ -198,16 +199,24 @@ body {
 }
 
 .selectFields{
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
   min-width: 200px;
 }
 
 select{
   min-width:400px;
   margin-bottom: 10px;
+}
+
+.formFields {
+  width: 400px;
+  text-align: center;
+}
+
+.formContainer {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .submit-btn{
@@ -236,4 +245,20 @@ select{
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.favorite{
+  padding-top: 10px;
+  padding-left: 15px;
+}
+
+.signIn {
+  margin-top: 50px;
+}
+
+.rest-container {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
