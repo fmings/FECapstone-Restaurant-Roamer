@@ -29,6 +29,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .logo-img{
@@ -249,4 +250,15 @@ select{
 .favorite{
   padding-top: 10px;
   padding-left: 15px;
+}
+
+.signIn {
+  margin-top: 50px;
+}
+
+.rest-container {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
